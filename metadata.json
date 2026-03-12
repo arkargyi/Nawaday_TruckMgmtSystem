@@ -1,0 +1,5 @@
+{
+  "name": "Truck Management System",
+  "description": "Truck registration, queue management, and QR code scanning.",
+  "requestFramePermissions": ["camera"]
+}
