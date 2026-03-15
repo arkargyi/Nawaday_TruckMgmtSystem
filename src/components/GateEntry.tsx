@@ -183,7 +183,7 @@ export default function GateEntry() {
           }
         }
         localStorage.removeItem('offline_queue');
-        alert(`Synced ${offlineQueue.length} offline scans to the server.`);
+        setSuccess(`Synced ${offlineQueue.length} offline scans to the server.`);
       }
     };
 

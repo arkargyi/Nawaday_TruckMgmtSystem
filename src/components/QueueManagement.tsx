@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { QueueItem, Gate } from '../types';
-import { ListOrdered, Play, CheckCircle, Clock } from 'lucide-react';
+import { ListOrdered, Play, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import clsx from 'clsx';
 
@@ -9,6 +9,7 @@ export default function QueueManagement() {
   const [queues, setQueues] = useState<QueueItem[]>([]);
   const [gates, setGates] = useState<Gate[]>([]);
   const [selectedGate, setSelectedGate] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const fetchData = async () => {
     try {
@@ -38,8 +39,9 @@ export default function QueueManagement() {
   }, []);
 
   const updateStatus = async (id: string, status: string) => {
+    setError('');
     if (status === 'called' && !selectedGate) {
-      alert('Please select a gate first');
+      setError('Please select a gate first');
       return;
     }
 
@@ -59,6 +61,12 @@ export default function QueueManagement() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm flex items-center">
+          <AlertCircle className="w-5 h-5 mr-2" />
+          {error}
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <ListOrdered className="w-6 h-6 text-indigo-600" />

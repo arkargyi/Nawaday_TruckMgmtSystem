@@ -282,8 +282,8 @@ async function startServer() {
     res.json(gates);
   });
 
-  // Analytics
-  app.get('/api/analytics', (req, res) => {
+  // Stats
+  app.get('/api/stats', (req, res) => {
     const totalToday = db.prepare("SELECT COUNT(*) as count FROM queues WHERE date(entry_time) = date('now')").get() as { count: number };
     const currentlyWaiting = db.prepare("SELECT COUNT(*) as count FROM queues WHERE status = 'waiting'").get() as { count: number };
     const currentlyProcessing = db.prepare("SELECT COUNT(*) as count FROM queues WHERE status = 'processing'").get() as { count: number };

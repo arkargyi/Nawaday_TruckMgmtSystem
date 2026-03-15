@@ -9,6 +9,7 @@ export default function Settings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
     fetchSettings();
@@ -78,9 +79,12 @@ export default function Settings() {
     });
   };
 
-  const handleNextRound = async () => {
-    if (!window.confirm('Are you sure you want to start a new round? This will reset the senior numbers for all queue types.')) return;
-    
+  const handleNextRoundClick = () => {
+    setShowConfirmModal(true);
+  };
+
+  const confirmNextRound = async () => {
+    setShowConfirmModal(false);
     setError('');
     setSuccess('');
     try {
@@ -127,6 +131,31 @@ export default function Settings() {
           </div>
         )}
 
+        {showConfirmModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Start Next Round?</h3>
+              <p className="text-gray-600 mb-6">
+                Are you sure you want to start a new round? This will reset the senior numbers for all queue types back to 1.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={() => setShowConfirmModal(false)}
+                  className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmNextRound}
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-8">
           {/* Round Management */}
           <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
@@ -136,7 +165,7 @@ export default function Settings() {
               Starting a new round will reset the Senior Numbers for all queue types back to 1.
             </p>
             <button
-              onClick={handleNextRound}
+              onClick={handleNextRoundClick}
               className="flex items-center px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-900 font-medium transition-colors"
             >
               <RefreshCw className="w-4 h-4 mr-2" />

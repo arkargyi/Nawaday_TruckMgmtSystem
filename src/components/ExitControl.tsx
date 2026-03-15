@@ -156,7 +156,7 @@ export default function ExitControl() {
           }
         }
         localStorage.removeItem('offline_exit_queue');
-        alert(`Synced ${offlineExitQueue.length} offline exits to the server.`);
+        setSuccess(`Synced ${offlineExitQueue.length} offline exits to the server.`);
       }
     };
 

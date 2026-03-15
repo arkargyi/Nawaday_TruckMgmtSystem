@@ -19,7 +19,7 @@ export default function LiveDashboard() {
     try {
       const [queuesRes, analyticsRes] = await Promise.all([
         fetch('/api/queues'),
-        fetch('/api/analytics')
+        fetch('/api/stats')
       ]);
       const queuesData = await queuesRes.json();
       const analyticsData = await analyticsRes.json();
